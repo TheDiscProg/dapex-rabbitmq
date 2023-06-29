@@ -40,9 +40,5 @@ lazy val root = (project in file("."))
 
 addCommandAlias("clntst", ";clean;scalafmt;test:scalafmt;test;")
 addCommandAlias("cvrtst", ";clean;scalafmt;test:scalafmt;coverage;test;coverageReport;")
-credentials += Credentials(
-  "GitHub Package Registry",
-  "maven.pkg.github.com",
-  "TheDiscProg",
-  TokenSource.Environment("GITHUB_TOKEN").variable)
+
 
