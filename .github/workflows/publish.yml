@@ -5,6 +5,7 @@ on:
       - master
 env:
   GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
+  REPO_READ: ${{ secrets.REPO_READ }}
 jobs:
   test:
     strategy:

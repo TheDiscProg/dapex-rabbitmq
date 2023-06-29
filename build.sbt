@@ -8,8 +8,7 @@ lazy val commonSettings = Seq(
   resolvers += Resolver.githubPackages("TheDiscProg"),
   githubOwner := "TheDiscProg",
   githubRepository := "dapex-rabbitmq",
-  githubTokenSource := TokenSource.Environment("GITHUB_TOKEN"),
-  githubSuppressPublicationWarning := false,
+  githubTokenSource := TokenSource.Environment("REPO_READ"),
   addCompilerPlugin(
     ("org.typelevel" %% "kind-projector" % "0.13.2").cross(CrossVersion.full)
   ),
