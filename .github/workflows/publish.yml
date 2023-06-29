@@ -2,7 +2,7 @@ name: Publish DAPEX RabbitMQ
 on:
   push:
     branches:
-      - main
+      - master
 env:
   GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
 jobs:
