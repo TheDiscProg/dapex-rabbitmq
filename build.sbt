@@ -4,6 +4,7 @@ ThisBuild / version := "0.1.0"
 
 githubOwner := "TheDiscProg"
 githubRepository := "dapex-rabbitmq"
+githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.13.10",
