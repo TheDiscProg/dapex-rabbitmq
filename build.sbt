@@ -2,6 +2,8 @@ ThisBuild / organization := "DAPEX"
 
 ThisBuild / version := "0.1.0"
 
+githubOwner := "TheDiscProg"
+githubRepository := "dapex-rabbitmq"
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.13.10",
@@ -34,9 +36,6 @@ lazy val root = (project in file("."))
     scalacOptions ++= Scalac.options,
   )
   .dependsOn(base % "test->test; compile->compile")
-
-githubOwner := "TheDiscProg"
-githubRepository := "dapex-rabbitmq"
 
 addCommandAlias("clntst", ";clean;scalafmt;test:scalafmt;test;")
 addCommandAlias("cvrtst", ";clean;scalafmt;test:scalafmt;coverage;test;coverageReport;")
