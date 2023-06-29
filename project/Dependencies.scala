@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   lazy val all = Seq(
-    "DAPEX" %% "dapex-messaging" % "0.1.5",
+    "DAPEX" % "dapex-messaging_2.13" % "0.1.5",
     "Shareprice" %% "shareprice-config" % "0.1.2",
     "dev.profunktor" %% "fs2-rabbit" % "5.0.0",
     "dev.profunktor" %% "fs2-rabbit-circe" % "5.0.0",
