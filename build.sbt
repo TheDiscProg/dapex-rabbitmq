@@ -9,6 +9,12 @@ lazy val commonSettings = Seq(
   githubOwner := "TheDiscProg",
   githubRepository := "dapex-rabbitmq",
   githubTokenSource := TokenSource.Environment("GITHUB_TOKEN"),
+  githubSuppressPublicationWarning := false,
+  credentials += Credentials(
+    "GitHub Package Registry",
+    "maven.pkg.github.com",
+    "TheDiscProg",
+    TokenSource.Environment("GITHUB_TOKEN").variable),
   addCompilerPlugin(
     ("org.typelevel" %% "kind-projector" % "0.13.2").cross(CrossVersion.full)
   ),

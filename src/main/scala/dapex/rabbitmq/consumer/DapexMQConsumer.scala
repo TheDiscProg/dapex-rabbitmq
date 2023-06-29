@@ -10,7 +10,6 @@ import dev.profunktor.fs2rabbit.config.declaration._
 import dev.profunktor.fs2rabbit.effects.Log
 import dev.profunktor.fs2rabbit.interpreter.RabbitClient
 import dev.profunktor.fs2rabbit.json.Fs2JsonDecoder
-import dev.profunktor.fs2rabbit.model
 import dev.profunktor.fs2rabbit.model.AckResult.{Ack, NAck}
 import dev.profunktor.fs2rabbit.model.{AMQPChannel, AckResult, AmqpEnvelope, DeliveryTag}
 import dev.profunktor.fs2rabbit.resiliency.ResilientStream
@@ -29,15 +28,16 @@ class DapexMQConsumer[F[_]: Concurrent: Logger](rmqClient: RabbitClient[F])(impl
     createConsumerStream(consumers)
   }
 
-  private def createConsumerStream(consumers: F[List[DapexMessageConsumer[F]]]): Stream[F, Unit] =
-    for {
+  private def createConsumerStream(consumers: F[List[DapexMessageConsumer[F]]]): Stream[F, Unit] = {
+     for {
       consumer: DapexMessageConsumer[F] <- Stream.evalSeq(consumers)
       (acker, stream) = consumer.ackerConsumer
     } yield stream
       .through(decoder[DapexMessage])
       .flatMap {
-        handleDapexMessage(_, consumer.handler.queue.name)(acker)(consumer.handler.f)
+        handleDapexMessage(_)(acker)(consumer.handler.f)
       }
+  }
 
   private def setUpRMQConsumers(
       handlers: List[DapexMessageHandler[F]]
@@ -113,8 +113,7 @@ class DapexMQConsumer[F[_]: Concurrent: Logger](rmqClient: RabbitClient[F])(impl
     } yield DapexMessageConsumer(handler = handler, ackerConsumer = ca)
 
   private def handleDapexMessage[E <: ServiceError](
-      decodedMsg: (Either[Error, DapexMessage], DeliveryTag),
-      queue: model.QueueName
+      decodedMsg: (Either[Error, DapexMessage], DeliveryTag)
   )(acker: AckResult => F[Unit])(f: DapexMessage => F[Unit]): Stream[F, Unit] =
     decodedMsg match {
       case (Left(error), tag) =>
