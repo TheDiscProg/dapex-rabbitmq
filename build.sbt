@@ -2,14 +2,13 @@ ThisBuild / organization := "DAPEX"
 
 ThisBuild / version := "0.1.0"
 
-githubOwner := "TheDiscProg"
-githubRepository := "dapex-rabbitmq"
-githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
-
 lazy val commonSettings = Seq(
   scalaVersion := "2.13.10",
   libraryDependencies ++= Dependencies.all,
   resolvers += Resolver.githubPackages("TheDiscProg"),
+  githubOwner := "TheDiscProg",
+  githubRepository := "dapex-rabbitmq",
+  githubTokenSource := TokenSource.Environment("GITHUB_TOKEN"),
   addCompilerPlugin(
     ("org.typelevel" %% "kind-projector" % "0.13.2").cross(CrossVersion.full)
   ),
@@ -34,7 +33,7 @@ lazy val root = (project in file("."))
   .settings(
     commonSettings,
     name := "dapex-rabbitmq",
-    scalacOptions ++= Scalac.options,
+    scalacOptions ++= Scalac.options
   )
   .dependsOn(base % "test->test; compile->compile")
 
