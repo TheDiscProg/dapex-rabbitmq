@@ -10,11 +10,6 @@ lazy val commonSettings = Seq(
   githubRepository := "dapex-rabbitmq",
   githubTokenSource := TokenSource.Environment("GITHUB_TOKEN"),
   githubSuppressPublicationWarning := false,
-  credentials += Credentials(
-    "GitHub Package Registry",
-    "maven.pkg.github.com",
-    "TheDiscProg",
-    TokenSource.Environment("GITHUB_TOKEN").variable),
   addCompilerPlugin(
     ("org.typelevel" %% "kind-projector" % "0.13.2").cross(CrossVersion.full)
   ),
@@ -45,3 +40,9 @@ lazy val root = (project in file("."))
 
 addCommandAlias("clntst", ";clean;scalafmt;test:scalafmt;test;")
 addCommandAlias("cvrtst", ";clean;scalafmt;test:scalafmt;coverage;test;coverageReport;")
+credentials += Credentials(
+  "GitHub Package Registry",
+  "maven.pkg.github.com",
+  "TheDiscProg",
+  TokenSource.Environment("GITHUB_TOKEN").variable)
+
