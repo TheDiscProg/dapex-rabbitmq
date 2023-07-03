@@ -1,6 +1,6 @@
 ThisBuild / organization := "DAPEX"
 
-ThisBuild / version := "0.1.0"
+ThisBuild / version := "0.1.1"
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.13.10",
@@ -34,6 +34,7 @@ lazy val root = (project in file("."))
     name := "dapex-rabbitmq",
     scalacOptions ++= Scalac.options
   )
+  .aggregate(base)
   .dependsOn(base % "test->test; compile->compile")
 
 githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
