@@ -14,10 +14,10 @@ lazy val commonSettings = Seq(
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
 )
 
-lazy val rabbitmq_base = (project in file("rabbitmq_base"))
+lazy val base = (project in file("base"))
   .settings(
     commonSettings,
-    name := "base",
+    name := "rabbitmq_base",
     scalacOptions ++= Scalac.options,
     coverageExcludedPackages := Seq(
       "<empty>",
@@ -34,8 +34,8 @@ lazy val root = (project in file("."))
     name := "dapex-rabbitmq",
     scalacOptions ++= Scalac.options
   )
-  .aggregate(rabbitmq_base)
-  .dependsOn(rabbitmq_base % "test->test; compile->compile")
+  .aggregate(base)
+  .dependsOn(base % "test->test; compile->compile")
 
 githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
 
