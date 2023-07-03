@@ -14,7 +14,7 @@ lazy val commonSettings = Seq(
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
 )
 
-lazy val rabbitmq_base = (project in file("base"))
+lazy val rabbitmq_base = (project in file("rabbitmq_base"))
   .settings(
     commonSettings,
     name := "base",
