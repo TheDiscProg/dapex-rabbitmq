@@ -19,7 +19,9 @@ class DapexMQPublisher[F[_]: Sync: Logger](rabbitClient: RabbitClient[F])
 
   def publishMessageToQueue(message: DapexMessage, queue: RabbitQueue): F[Unit] =
     for {
-      _ <- Logger[F].info(s"Publishing DAPEX message to ${queue.name}")
+      _ <- Logger[F].info(
+        s"Publishing DAPEX message to ${queue.name}, Message Request: ${message.client.requestId}"
+      )
       response <- rabbitClient.createConnectionChannel
         .use { implicit channel =>
           rabbitClient

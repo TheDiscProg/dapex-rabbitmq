@@ -28,16 +28,15 @@ class DapexMQConsumer[F[_]: Concurrent: Logger](rmqClient: RabbitClient[F])(impl
     createConsumerStream(consumers)
   }
 
-  private def createConsumerStream(consumers: F[List[DapexMessageConsumer[F]]]): Stream[F, Unit] = {
-     for {
+  private def createConsumerStream(consumers: F[List[DapexMessageConsumer[F]]]): Stream[F, Unit] =
+    (for {
       consumer: DapexMessageConsumer[F] <- Stream.evalSeq(consumers)
       (acker, stream) = consumer.ackerConsumer
     } yield stream
       .through(decoder[DapexMessage])
       .flatMap {
         handleDapexMessage(_)(acker)(consumer.handler.f)
-      }
-  }
+      }).parJoinUnbounded
 
   private def setUpRMQConsumers(
       handlers: List[DapexMessageHandler[F]]
@@ -145,5 +144,15 @@ object DapexMQConsumer {
     ResilientStream
       .run(dapexMQConsumer.consumeRMQDapexMessage(handlers))
       .as(ExitCode.Success)
+  }
+
+  def consumerRMQStream[F[_]: Temporal: Logger](
+      rmqClient: RabbitClient[F],
+      handlers: List[DapexMessageHandler[F]],
+      channel: AMQPChannel
+  ): Stream[F, Unit] = {
+    implicit val c = channel
+    val dapexMQConsumer = new DapexMQConsumer[F](rmqClient)
+    dapexMQConsumer.consumeRMQDapexMessage(handlers)
   }
 }
