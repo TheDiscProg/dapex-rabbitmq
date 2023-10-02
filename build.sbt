@@ -1,6 +1,6 @@
 ThisBuild / organization := "DAPEX"
 
-ThisBuild / version := "0.1.2"
+ThisBuild / version := "0.1.3"
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.13.10",
@@ -14,18 +14,7 @@ lazy val commonSettings = Seq(
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
 )
 
-lazy val base = (project in file("base"))
-  .settings(
-    commonSettings,
-    name := "rabbitmq_base",
-    scalacOptions ++= Scalac.options,
-    coverageExcludedPackages := Seq(
-      "<empty>",
-      ".*.entities.*"
-    ).mkString(";")
-  )
-
-lazy val root = (project in file("."))
+lazy val root = project.in(file("."))
   .enablePlugins(
     ScalafmtPlugin
   )
@@ -34,12 +23,8 @@ lazy val root = (project in file("."))
     name := "dapex-rabbitmq",
     scalacOptions ++= Scalac.options
   )
-  .aggregate(base)
-  .dependsOn(base % "test->test; compile->compile")
 
 githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
 
-addCommandAlias("clntst", ";clean;scalafmt;test:scalafmt;test;")
-addCommandAlias("cvrtst", ";clean;scalafmt;test:scalafmt;coverage;test;coverageReport;")
 
 
