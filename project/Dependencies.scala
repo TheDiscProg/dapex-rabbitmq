@@ -16,6 +16,7 @@ object Dependencies {
     "io.circe" %% "circe-generic-extras" % "0.14.3",
     "org.typelevel" %% "cats-effect" % "3.4.8",
     "org.typelevel" %% "log4cats-slf4j" % "2.6.0",
+    "org.scalatest" %% "scalatest" % "3.2.15" % Test,
     "org.typelevel" %% "cats-effect-testing-scalatest" % "1.4.0" % Test
   )
 }

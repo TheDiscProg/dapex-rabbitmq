@@ -48,4 +48,7 @@ case object RabbitQueue extends Enum[RabbitQueue] {
   }
 
   override def values: immutable.IndexedSeq[RabbitQueue] = findValues
+
+  override lazy val namesToValuesMap: Map[String, RabbitQueue] =
+    values.map(v => v.name.value -> v).toMap ++ extraNamesToValuesMap
 }
