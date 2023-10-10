@@ -5,8 +5,8 @@ A library to publish and consume DAPEX messages from RabbitMQ using the followin
 * Cats-Effect: Version 3.4.8
 
 ## How to Use
-There is a sample project, [RabbitMQ-Tester](https://github.com/TheDiscProg/rabbitmq-tester), that will both 
-publish and consume from RabbitMQ; see `PublishAndConsimeRMQ.scala` for more details.
+See the integration test `RabbitPublisherConsumerTest.scala` and `RMQService.scala` on how to wire up both a publisher
+and a consumer for an actual implementation.
 
 ##  Publishing to RabbitMQ
 To publish to RabbitMQ, a `DapexMQPublisher` instance is required with a RabbitClient:
@@ -20,7 +20,7 @@ where:
 ## Consuming from RabbitMQ
 Consuming is a little more involved.
 
-1. Define a RabbitMQ Consumer that handles `DapexMessage`, it should handle messages rec:
+1. Define a RabbitMQ Consumer that handles `DapexMessage`, it should handle messages received on each of the queues:
 
 ```
 class RMQConsumer[F[_]]{ 
@@ -33,7 +33,7 @@ class RMQConsumer[F[_]]{
 }
 ```
     
-2. Create a list of `DapexMessageHandler` that handles each of the queues:
+2. Create a list of `DapexMessageHandler` that routes messages recieved on different queues to the handler:
 
 ```
 val handlers = Vector(
@@ -43,11 +43,17 @@ val handlers = Vector(
 )
 ```
 
-3. To start consuming from the RabbitMQ queues:
+An example of this is in `DapexMessgeHandlerConfigurator.scala` creates the above list.
+
+3. Create a consuming stream from the handlers:
 ```
-    val consumers = DapexMQConsumer.consumerRMQStream(rabbitClient, handlers.toList, amqpChannel)
+    val consumers: fs2.Stream[F, Unit] = DapexMQConsumer.consumerRMQStream(rabbitClient, handlers.toList, amqpChannel)
     
 ```
 
-And that's it!
+4. Run the stream:
+
+```
+    ResilientStream.run(consumerStream).as ....
+```
 

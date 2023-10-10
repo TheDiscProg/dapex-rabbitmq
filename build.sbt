@@ -15,16 +15,21 @@ lazy val commonSettings = Seq(
 )
 
 lazy val root = project.in(file("."))
+  .configs(IntegrationTest)
   .enablePlugins(
     ScalafmtPlugin
   )
   .settings(
     commonSettings,
     name := "dapex-rabbitmq",
-    scalacOptions ++= Scalac.options
+    scalacOptions ++= Scalac.options,
+    Defaults.itSettings
   )
 
 githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
+
+addCommandAlias("formatAll", ";scalafmt;test:scalafmt;it:scalafmt")
+addCommandAlias("testAll", ";clean;test;it:test")
 
 
 

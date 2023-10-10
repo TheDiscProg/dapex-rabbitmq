@@ -9,6 +9,7 @@ import dapex.rabbitmq.RabbitQueue
 import dev.profunktor.fs2rabbit.effects.MessageEncoder
 import dev.profunktor.fs2rabbit.interpreter.RabbitClient
 import dev.profunktor.fs2rabbit.json.Fs2JsonEncoder
+import dev.profunktor.fs2rabbit.model
 import dev.profunktor.fs2rabbit.model.AmqpMessage
 import io.circe.Encoder
 import org.typelevel.log4cats.Logger
@@ -23,7 +24,7 @@ class DapexMQPublisher[F[_]: Sync: Logger](rabbitClient: RabbitClient[F])
         s"Publishing DAPEX message to ${queue.name}, Message Request: ${message.client.requestId}"
       )
       response <- rabbitClient.createConnectionChannel
-        .use { implicit channel =>
+        .use { implicit channel: model.AMQPChannel =>
           rabbitClient
             .createPublisher(
               queue.exchange,
