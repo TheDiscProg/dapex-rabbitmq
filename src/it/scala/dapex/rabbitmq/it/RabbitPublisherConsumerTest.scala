@@ -6,7 +6,6 @@ import dapex.messaging._
 import dapex.rabbitmq.RabbitQueue
 import dapex.rabbitmq.consumer.DapexMQConsumer
 import dapex.rabbitmq.publisher.DapexMQPublisher
-import dev.profunktor.fs2rabbit.resiliency.ResilientStream
 import fs2._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec._

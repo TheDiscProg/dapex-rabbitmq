@@ -52,8 +52,40 @@ An example of this is in `DapexMessgeHandlerConfigurator.scala` creates the abov
 ```
 
 4. Run the stream:
+You can run the consumer stream directly as in:
 
 ```
     ResilientStream.run(consumerStream).as ....
 ```
-
+or using `DapexMQConsumer.consumeRMQ` method. It's method signature is:
+```scala
+  def consumeRMQ[F[_]: Log: Temporal: Logger](
+      rmqClient: RabbitClient[F],
+      handlers: List[DapexMessageHandler[F]],
+      channel: AMQPChannel
+  ): F[ExitCode] 
+```
+In which case, provided that an AppService class is returned:
+```scala
+case class AppService[F[_]](
+    server: Server,
+    rmqHandler: Vector[DapexMessageHandler[F]],
+    rmqClient: RabbitClient[F],
+    channel: AMQPChannel
+)
+```
+Then the `run` method in the `MainApp` will look like:
+```scala
+  override def run(args: List[String]): IO[ExitCode] =
+    Resource
+      .eval(Slf4jLogger.create[IO])
+      .use { implicit logger: Logger[IO] =>
+        AppServer
+          .createServer[IO]()
+          .use(service =>
+            DapexMQConsumer
+              .consumeRMQ(service.rmqClient, service.rmqHandler.toList, service.channel)
+          )
+          .as(ExitCode.Success)
+      }
+```
