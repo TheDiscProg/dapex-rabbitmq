@@ -2,7 +2,7 @@ package dapex.rabbitmq
 
 import cats.effect.Async
 import cats.effect.std.Dispatcher
-import dapex.config.RabbitMQConfig
+import dapex.rabbitmq.config.RabbitMQConfig
 import dev.profunktor.fs2rabbit.interpreter.RabbitClient
 
 object Rabbit {

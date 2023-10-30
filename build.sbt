@@ -1,6 +1,6 @@
 ThisBuild / organization := "DAPEX"
 
-ThisBuild / version := "0.1.6"
+ThisBuild / version := "0.2.0"
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.13.10",
@@ -29,7 +29,5 @@ lazy val root = project.in(file("."))
 githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
 
 addCommandAlias("formatAll", ";scalafmt;test:scalafmt;it:scalafmt")
-addCommandAlias("testAll", ";clean;test;it:test")
-
-
-
+addCommandAlias("cleanAll", ";clean;it:clean")
+addCommandAlias("testAll", ";cleanAll;formatAll;test;it:test")

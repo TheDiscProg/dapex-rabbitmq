@@ -1,10 +1,11 @@
 package dapex.rabbitmq.it
 
-import cats.effect.{ExitCode, IO, Temporal}
+import cats.effect.{IO, Temporal}
 import cats.implicits._
 import dapex.messaging._
 import dapex.rabbitmq.RabbitQueue
 import dapex.rabbitmq.consumer.DapexMQConsumer
+import dapex.rabbitmq.it.entites.TestRabbitQueue
 import dapex.rabbitmq.publisher.DapexMQPublisher
 import fs2._
 import org.scalatest.concurrent.ScalaFutures
@@ -40,8 +41,10 @@ class RabbitPublisherConsumerTest extends AnyFlatSpec with Matchers with ScalaFu
     originator = Originator(
       clientId = "app-1",
       requestId = "app-req-1",
-      sourceEndpoint = "auth"
+      sourceEndpoint = "auth",
+      originalToken = "securitytoken"
     ),
+    entity = Some(Entity("user")),
     criteria = Vector(
       Criterion("username", "test@test.com", "EQ"),
       Criterion("password", "password1234", "EQ")
@@ -68,7 +71,7 @@ class RabbitPublisherConsumerTest extends AnyFlatSpec with Matchers with ScalaFu
         DapexMQConsumer.consumerRMQStream(service.rmqClient, service.handlers, service.channel)
 
       val publisherStream: List[Stream[IO, String]] =
-        RabbitQueue.values.toList.map(q => publishMessage(service.rmqPublisher, request, q))
+        TestRabbitQueue.values.toList.map(q => publishMessage(service.rmqPublisher, request, q))
 
       val foldedPubliserStream = publisherStream.fold(emptyStream)((s1, s2) => s1.merge(s2))
 

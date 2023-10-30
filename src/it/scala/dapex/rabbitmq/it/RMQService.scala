@@ -3,9 +3,9 @@ package dapex.rabbitmq.it
 import cats.effect._
 import cats.effect.std.Dispatcher
 import com.github.blemale.scaffeine.{Cache, Scaffeine}
-import dapex.config.RabbitMQConfig
 import dapex.messaging.DapexMessage
 import dapex.rabbitmq.Rabbit
+import dapex.rabbitmq.config.RabbitMQConfig
 import dapex.rabbitmq.consumer.DapexMessageHandler
 import dapex.rabbitmq.it.consumer.DapexMessgeHandlerConfigurator
 import dapex.rabbitmq.it.entites.Service

@@ -8,6 +8,10 @@ A library to publish and consume DAPEX messages from RabbitMQ using the followin
 See the integration test `RabbitPublisherConsumerTest.scala` and `RMQService.scala` on how to wire up both a publisher
 and a consumer for an actual implementation.
 
+## Define RabbitMQ Queues
+The first step would be to define your RabbitMQ queues that the service would be listening to.
+See `TestRabbitQueue.scala` as an example on how to do this.
+
 ##  Publishing to RabbitMQ
 To publish to RabbitMQ, a `DapexMQPublisher` instance is required with a RabbitClient:
 * `rmqPublisher = new DapexMQPublisher(rabbitClient)`
