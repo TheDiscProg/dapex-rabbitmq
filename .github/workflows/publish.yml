@@ -1,4 +1,4 @@
-name: Publish DAPEX RabbitMQ
+name: Publish SIMEX RabbitMQ
 on:
   push:
     branches:
