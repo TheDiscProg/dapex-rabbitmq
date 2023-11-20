@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   lazy val all = Seq(
-    "simex" %% "simex-messaging" % "0.6.0",
+    "simex" %% "simex-messaging" % "0.7.0",
     "dev.profunktor" %% "fs2-rabbit" % "5.0.0",
     "dev.profunktor" %% "fs2-rabbit-circe" % "5.0.0",
     "com.beachape" %% "enumeratum" % "1.7.2",
