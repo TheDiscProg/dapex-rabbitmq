@@ -70,7 +70,7 @@ class RabbitPublisherConsumerTest
       ks.nonEmpty shouldBe true
       ks.contains("service.auth-1") shouldBe true
       ks.contains("service.dbread-1") shouldBe true
-      ks.contains("service.collectionPoint-1") shouldBe true
+      ks.contains("service.collectionPoint-10") shouldBe true
     }
   }
 
