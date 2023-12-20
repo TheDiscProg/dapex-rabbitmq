@@ -3,6 +3,8 @@ package simex.rabbitmq.config
 import dev.profunktor.fs2rabbit.config.Fs2RabbitConfig
 import io.circe.Decoder
 import io.circe.generic.semiauto.deriveDecoder
+import pureconfig.{CamelCase, ConfigFieldMapping}
+import pureconfig.generic.ProductHint
 
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration.FiniteDuration
@@ -31,6 +33,6 @@ case class RabbitMQConfig(
 }
 
 object RabbitMQConfig {
-
+  implicit val hint = ProductHint[RabbitMQConfig](ConfigFieldMapping(CamelCase, CamelCase))
   implicit val rabbitMQConfigDecoder: Decoder[RabbitMQConfig] = deriveDecoder
 }
