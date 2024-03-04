@@ -19,7 +19,7 @@ class RMQConsumer[F[_]: Applicative: Logger](cachingService: CachingServiceAlgeb
 
   private def logMessage(queue: String, msg: Simex): F[Unit] = {
     Logger[F].info(
-      s"Received message: [Queue $queue], [Endpoint: ${msg.endpoint}], [Method: ${msg.endpoint.method}], [ID: ${msg.client.requestId}]"
+      s"Received message: [Queue $queue], [Destination: ${msg.destination}], [Method: ${msg.destination.method}], [ID: ${msg.client.requestId}]"
     )
     cachingService.storeInCache(msg.client.requestId, msg) *> ().pure[F]
   }
