@@ -1,7 +1,7 @@
-name: Publish Simex RabbitMQ Handler
+name: Run tests
 on:
   push:
-    tags:
+    branches:
       - '*'
 env:
   GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
@@ -25,5 +25,5 @@ jobs:
       - name: Build and test
         shell: bash
         run: |
-          echo "Running tests and then publishing"
-          sbt +test +publish
+          echo "Running tests"
+          sbt +test

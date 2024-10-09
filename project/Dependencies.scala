@@ -2,31 +2,33 @@ import sbt._
 
 object Dependencies {
 
-  private lazy val simexVersion = "0.8.0"
+  private lazy val simexVersion = "0.9.1"
+  private lazy val circeVersion = "0.14.10"
+  private lazy val fs2Version = "5.2.0"
+  private lazy val enumeratumVersion = "1.7.5"
+  private lazy val catsEffectVersion = "3.5.4"
 
   lazy val all = Seq(
-    "simex" %% "simex-messaging" % simexVersion,
-    "dev.profunktor" %% "fs2-rabbit" % "5.0.0",
-    "dev.profunktor" %% "fs2-rabbit-circe" % "5.0.0",
-    "com.beachape" %% "enumeratum" % "1.7.2",
-    "com.beachape" %% "enumeratum-circe" % "1.7.2",
-    "io.circe" %% "circe-core" % "0.14.5",
-    "io.circe" %% "circe-generic" % "0.14.5",
-    "io.circe" %% "circe-parser" % "0.14.5",
-    "io.circe" %% "circe-generic-extras" % "0.14.3",
-    "io.circe" %% "circe-config" % "0.10.0",
-    "com.github.pureconfig" %% "pureconfig" % "0.17.4",
-    "org.typelevel" %% "cats-effect" % "3.4.8",
-    "org.typelevel" %% "log4cats-slf4j" % "2.6.0",
-    "eu.timepit" %% "refined" % "0.11.0"
+    "io.github.thediscprog" %% "simex-messaging" % simexVersion,
+    "io.github.thediscprog" %% "slogic" % "0.3.1",
+    "dev.profunktor" %% "fs2-rabbit" % fs2Version,
+    "dev.profunktor" %% "fs2-rabbit-circe" % fs2Version,
+    "com.beachape" %% "enumeratum" % enumeratumVersion,
+    "com.beachape" %% "enumeratum-circe" % enumeratumVersion,
+    "io.circe" %% "circe-core" % circeVersion,
+    "io.circe" %% "circe-generic" % circeVersion,
+    "io.circe" %% "circe-parser" % circeVersion,
+    "io.circe" %% "circe-config" % "0.10.1",
+    "org.typelevel" %% "cats-effect" % catsEffectVersion,
+    "org.typelevel" %% "log4cats-slf4j" % "2.7.0",
+    "eu.timepit" %% "refined" % "0.11.2"
   )
 
   lazy val it = Seq(
-    "org.scalatest" %% "scalatest" % "3.2.15" % Test,
-    "org.typelevel" %% "cats-effect-testing-scalatest" % "1.4.0" % Test,
-    "ch.qos.logback" % "logback-classic" % "1.4.11" % Test,
-    "com.dimafeng" %% "testcontainers-scala-scalatest" % "0.41.0" % Test,
-    "com.github.blemale" %% "scaffeine" % "5.2.1" % Test,
-    "org.testcontainers" % "rabbitmq" % "1.19.1" % Test
+    "org.scalatest" %% "scalatest" % "3.2.19" % Test,
+    "org.typelevel" %% "cats-effect-testing-scalatest" % "1.5.0" % Test,
+    "ch.qos.logback" % "logback-classic" % "1.5.8" % Test,
+    "com.github.blemale" %% "scaffeine" % "5.3.0" % Test,
+    "org.testcontainers" % "rabbitmq" % "1.20.2" % Test
   )
 }
