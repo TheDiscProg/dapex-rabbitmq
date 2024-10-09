@@ -1,8 +1,9 @@
 # simex-rabbitmq library
+## Version 0.9.0
 A library to publish and consume SIMEX messages from RabbitMQ using the following libraries:
-* FS2-Rabbit and Circe: Version 5.0.0
-* Circe: Version 0.14.5
-* Cats-Effect: Version 3.4.8
+* FS2-Rabbit and Circe: Version 5.2.0
+* Circe: Version 0.14.10
+* Cats-Effect: Version 3.5.4
 
 ## How to Use
 See the integration test `RabbitPublisherConsumerTest.scala` and `RMQService.scala` on how to wire up both a publisher
