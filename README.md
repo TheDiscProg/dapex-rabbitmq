@@ -1,13 +1,20 @@
 # simex-rabbitmq library
-## Version 0.9.0
+
 A library to publish and consume SIMEX messages from RabbitMQ using the following libraries:
 * FS2-Rabbit and Circe: Version 5.2.0
 * Circe: Version 0.14.10
 * Cats-Effect: Version 3.5.4
 
+The consumer uses FS2 Stream.
+
 ## How to Use
-See the integration test `RabbitPublisherConsumerTest.scala` and `RMQService.scala` on how to wire up both a publisher
-and a consumer for an actual implementation.
+See the integration test `RabbitPublisherConsumerTest.scala` and `RMQService.scala` to see an example of how to wire up both publishers
+and consumers. The integration test is not included in the library but see the [GitHub repo](https://github.com/TheDiscProg/simex-rabbitmq)
+for more information. There are a couple of points to note about the integration test:
+1. The integration tests uses [TestContainers](https://java.testcontainers.org)
+2. As TestContainers assign a random port, and we need to get the mapped port, the steps in wiring RabbitMQ Client in `RabbitPublisherConsumerTest` is different from that described below. See [Testcontainer networking](`RabbitPublisherConsumerTest) 
+
+A step-by-step instructions for production use are included below.
 
 ## Define RabbitMQ Queues
 The first step would be to define your RabbitMQ queues that the service would be listening to.
