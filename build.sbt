@@ -2,13 +2,14 @@ import sbt.librarymanagement.CrossVersion
 import sbt.url
 import xerial.sbt.Sonatype.{GitHubHosting, sonatypeCentralHost}
 
-lazy val scala2 = "2.13.14"
+lazy val scala2 = "2.13.15"
 lazy val scala3 = "3.5.1"
 lazy val supportedScalaVersions = List(scala2, scala3)
 
 lazy val commonSettings = Seq(
   scalaVersion := scala3,
-  libraryDependencies ++= Dependencies.all
+  libraryDependencies ++= Dependencies.all,
+  crossScalaVersions := supportedScalaVersions
 )
 
 lazy val root = project.in(file("."))
@@ -24,11 +25,7 @@ lazy val root = project.in(file("."))
         case Some((2,13)) => Seq("-Ytasty-reader")
         case _ => Seq("-Yretain-trees")
       }
-    },
-    crossScalaVersions := supportedScalaVersions,
-    libraryDependencies ++= Seq(
-      ("com.github.pureconfig" %% "pureconfig" % "0.17.7").cross(CrossVersion.for3Use2_13)
-    )
+    }
   )
 
 lazy val integrationTest = (project in file("it"))
