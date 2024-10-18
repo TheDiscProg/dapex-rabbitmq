@@ -55,7 +55,7 @@ lazy val integrationTest = (project in file("it"))
   .dependsOn(root % "test->test; compile->compile")
   .aggregate(root)
 
-ThisBuild / version := "0.9.1"
+ThisBuild / version := "0.9.2"
 ThisBuild / organization := "io.github.thediscprog"
 ThisBuild / organizationName := "thediscprog"
 ThisBuild / organizationHomepage := Some(url("https://github.com/TheDiscProg"))
